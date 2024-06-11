@@ -1,0 +1,124 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
+import 'package:fyp_social_app/chats/recent_chats.dart';
+import 'package:fyp_social_app/models/post.dart';
+import 'package:fyp_social_app/screens/notification.dart';
+import 'package:fyp_social_app/utils/constants.dart';
+import 'package:fyp_social_app/utils/firebase.dart';
+import 'package:fyp_social_app/view_models/status/home/home_view_model.dart';
+import 'package:fyp_social_app/widgets/indicators.dart';
+import 'package:fyp_social_app/widgets/story_widget.dart';
+import 'package:fyp_social_app/widgets/userpost.dart';
+
+class Feeds extends StatefulWidget {
+  @override
+  _FeedsState createState() => _FeedsState();
+}
+
+class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) {
+        Provider.of<HomeViewModel>(context, listen: false).fetchFeeds();
+      },
+    );
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    HomeViewModel viewModel = Provider.of<HomeViewModel>(context);
+    return Scaffold(
+      key: scaffoldKey,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text(
+          Constants.appName,
+          style: const TextStyle(
+            fontSize: 25.0,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(
+              Iconsax.notification,
+              size: 25.0,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => Activities(),
+                ),
+              );
+            },
+          ),
+          IconButton(
+            icon: const Icon(
+              Iconsax.message,
+              size: 25.0,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (_) => Chats(),
+                ),
+              );
+            },
+          ),
+          const SizedBox(width: 5.0),
+        ],
+      ),
+      body: RefreshIndicator(
+        color: Theme.of(context).colorScheme.secondary,
+        onRefresh: () => viewModel.fetchFeeds(),
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const StoryWidget(),
+              Flexible(
+                child: ListView.builder(
+                  controller: viewModel.scrollController,
+                  itemCount: viewModel.data.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    PostModel posts = PostModel.fromJson(
+                      viewModel.data[index].data() as Map<String, dynamic>,
+                    );
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: UserPost(post: posts),
+                    );
+                  },
+                ),
+              ),
+              if (viewModel.loadingMore)
+               const Center(
+                  child: CupertinoActivityIndicator(),
+                )
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}

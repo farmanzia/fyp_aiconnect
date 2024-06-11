@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "354548073817",
+    "project_id": "social-app-fyp-22be4",
+    "storage_bucket": "social-app-fyp-22be4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354548073817:android:5f1f139d1d85563795b848",
+        "android_client_info": {
+          "package_name": "com.example.fyp_social_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354548073817-kqi80n0fa0opo45gcsl14rvv2gvdv0ta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fyp_social_app",
+            "certificate_hash": "c3f78378f8af90d7f41b9a7deb15aa1adb9ab14a"
+          }
+        },
+        {
+          "client_id": "354548073817-uqg58c4jre3f8g6ku9qn8117qmt8s7es.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBGypWRRNNO9QJX57nQhB-rTPXSLuX230"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354548073817-uqg58c4jre3f8g6ku9qn8117qmt8s7es.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "354548073817-e9vtj3h7hji2m28qmm4v3v4ofgolh35p.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fypSocialApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
