@@ -75,7 +75,7 @@ class _TabScreenState extends State<TabScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(width: 5),
+            const SizedBox(width: 5),
             for (Map item in pages)
               item['index'] == 2
                   ? buildFab()

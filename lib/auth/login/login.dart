@@ -19,7 +19,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     LoginViewModel viewModel = Provider.of<LoginViewModel>(context);
-
     return LoadingOverlay(
       progressIndicator: circularProgress(context),
       isLoading: viewModel.loading,
@@ -27,7 +26,7 @@ class _LoginState extends State<Login> {
         backgroundColor: Colors.white,
         key: viewModel.scaffoldKey,
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20.0),
           children: [
             SizedBox(height: MediaQuery.of(context).size.height / 5),
             Container(
@@ -37,8 +36,8 @@ class _LoginState extends State<Login> {
                 'assets/images/login.png',
               ),
             ),
-            SizedBox(height: 10.0),
-            Center(
+            const SizedBox(height: 10.0),
+            const Center(
               child: Text(
                 'Welcome back!',
                 style: TextStyle(
@@ -57,14 +56,14 @@ class _LoginState extends State<Login> {
                 ),
               ),
             ),
-            SizedBox(height: 25.0),
+            const SizedBox(height: 25.0),
             buildForm(context, viewModel),
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Don\'t have an account?'),
-                SizedBox(width: 5.0),
+                const Text('Don\'t have an account?'),
+                const SizedBox(width: 5.0),
                 GestureDetector(
                   onTap: () {
                     Navigator.of(context).push(
@@ -107,7 +106,7 @@ class _LoginState extends State<Login> {
             focusNode: viewModel.emailFN,
             nextFocusNode: viewModel.passFN,
           ),
-          SizedBox(height: 15.0),
+          const SizedBox(height: 15.0),
           PasswordFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.lock_closed_outline,
@@ -125,13 +124,13 @@ class _LoginState extends State<Login> {
           Align(
             alignment: Alignment.centerRight,
             child: Padding(
-              padding: EdgeInsets.only(right: 10.0),
+              padding: const EdgeInsets.only(right: 10.0),
               child: InkWell(
                 onTap: () => viewModel.forgotPassword(context),
                 child: Container(
                   width: 130,
                   height: 40,
-                  child: Align(
+                  child: const Align(
                     alignment: Alignment.centerRight,
                     child: Text(
                       'Forgot Password?',
@@ -144,7 +143,7 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-          SizedBox(height: 10.0),
+          const SizedBox(height: 10.0),
           Container(
             height: 45.0,
             width: 180.0,
@@ -162,7 +161,7 @@ class _LoginState extends State<Login> {
               // highlightElevation: 4.0,
               child: Text(
                 'Log in'.toUpperCase(),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12.0,
                   fontWeight: FontWeight.w600,

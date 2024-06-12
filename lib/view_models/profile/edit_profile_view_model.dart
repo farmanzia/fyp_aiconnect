@@ -1,7 +1,9 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_social_app/utils/firebase.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fyp_social_app/models/user.dart';
@@ -13,6 +15,7 @@ class EditProfileViewModel extends ChangeNotifier {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool validate = false;
   bool loading = false;
+
   UserService userService = UserService();
   final picker = ImagePicker();
   UserModel? user;
@@ -131,4 +134,6 @@ class EditProfileViewModel extends ChangeNotifier {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));
   }
+
+
 }

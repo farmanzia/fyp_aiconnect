@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_social_app/utils/firebase.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fyp_social_app/models/status.dart';
@@ -23,6 +25,9 @@ class StatusViewModel extends ChangeNotifier {
 
   //Variables
   bool loading = false;
+  bool isAiExpert = false;
+  String score='0';
+
   String? username;
   File? mediaUrl;
   final picker = ImagePicker();
@@ -139,5 +144,28 @@ class StatusViewModel extends ChangeNotifier {
   void showInSnackBar(String value, context) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));
+  }
+  isUserAiExpert(context){
+    if(firebaseAuth.currentUser?.uid!=null){
+      firestore.collection("users").doc(firebaseAuth.currentUser?.uid).get().then((value){
+        log("============ value['isAiExpert'] ${value['isAiExpert']}");
+        if(value['isAiExpert']==false){
+          isAiExpert=false;
+          // Navigator.of(context).pushReplacement(
+          //   CupertinoPageRoute(
+          //     builder: (_) => QuizScreen(),
+          //   ),
+          // );
+        }
+        else{
+          isAiExpert=true;
+          score=value['score'];
+        }
+      });
+    }
+
+    log("========score $score==== value[''] $isAiExpert");
+
+    notifyListeners();
   }
 }

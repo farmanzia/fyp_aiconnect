@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_social_app/auth/login/login.dart';
 import 'package:provider/provider.dart';
 import 'package:fyp_social_app/auth/register/register.dart';
 import 'package:fyp_social_app/utils/firebase.dart';
@@ -19,39 +20,39 @@ class _SettingState extends State<Setting> {
           onTap: () {
             Navigator.pop(context);
           },
-          child: Icon(Icons.keyboard_backspace),
+          child: const Icon(Icons.keyboard_backspace),
         ),
         elevation: 0.0,
-        title: Text(
+        title: const Text(
           "Settings",
           style: TextStyle(),
         ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(10.0),
         child: ListView(
           children: <Widget>[
+            // const ListTile(
+            //   title: Text(
+            //     "About",
+            //     style: TextStyle(
+            //       fontWeight: FontWeight.w900,
+            //     ),
+            //   ),
+            //   subtitle: Text(
+            //     "A Fully Functional Social Media Application Made by CharlyKeleb",
+            //   ),
+            //   trailing: Icon(Icons.error),
+            // ),
+            // const Divider(),
             ListTile(
-              title: Text(
-                "About",
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                ),
-              ),
-              subtitle: Text(
-                "A Fully Functional Social Media Application Made by CharlyKeleb",
-              ),
-              trailing: Icon(Icons.error),
-            ),
-            Divider(),
-            ListTile(
-              title: Text(
+              title: const Text(
                 "Dark Mode",
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                 ),
               ),
-              subtitle: Text("Use the dark mode"),
+              subtitle: const Text("Use the dark mode"),
               trailing: Consumer<ThemeProvider>(
                 builder: (context, notifier, child) => CupertinoSwitch(
                   onChanged: (val) {
@@ -62,13 +63,13 @@ class _SettingState extends State<Setting> {
                 ),
               ),
             ),
-            Divider(),
+            const Divider(),
             ListTile(
               onTap: () async {
                 await firebaseAuth.signOut();
                 Navigator.of(context).pushReplacement(
                   CupertinoPageRoute(
-                    builder: (_) => Register(),
+                    builder: (_) => Login(),
                   ),
                 );
               },
@@ -85,7 +86,7 @@ class _SettingState extends State<Setting> {
                 color: Theme.of(context).iconTheme.color,
               ),
             ),
-            Divider(),
+            const Divider(),
           ],
         ),
       ),

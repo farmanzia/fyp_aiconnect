@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_social_app/auth/register/register.dart';
+import 'package:fyp_social_app/questionaire/questionaire.dart';
+import 'package:fyp_social_app/utils/firebase.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:fyp_social_app/components/life_cycle_event_handler.dart';
@@ -52,9 +55,13 @@ class MyAppState extends State<MyApp> {
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: ((BuildContext context, snapshot) {
                 if (snapshot.hasData) {
+
+
+
                   return TabScreen();
-                } else
+                } else {
                   return Landing();
+                }
               }),
             ),
           );

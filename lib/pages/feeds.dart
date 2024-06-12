@@ -23,7 +23,7 @@ class Feeds extends StatefulWidget {
 
 class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+late bool isAiExpert=false;
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback(
@@ -32,6 +32,9 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin {
       },
     );
     super.initState();
+    
+
+    
   }
 
   @override

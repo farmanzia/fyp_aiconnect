@@ -39,6 +39,8 @@ class AuthService {
       'country': country,
       'photoUrl': user.photoURL ?? '',
       'gender': '',
+      'isAiExpert':false,
+      'score':0
     });
   }
 

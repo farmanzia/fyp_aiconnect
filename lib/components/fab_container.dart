@@ -1,6 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_social_app/utils/firebase.dart';
+import 'package:fyp_social_app/view_models/auth/posts_view_model.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +21,7 @@ class FabContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     StatusViewModel viewModel = Provider.of<StatusViewModel>(context);
+    viewModel.isUserAiExpert(context);
     return OpenContainer(
       transitionType: ContainerTransitionType.fade,
       openBuilder: (BuildContext context, VoidCallback _) {
@@ -34,20 +37,21 @@ class FabContainer extends StatelessWidget {
       closedBuilder: (BuildContext context, VoidCallback openContainer) {
         return FloatingActionButton(
           backgroundColor: Theme.of(context).primaryColor,
-          child: Icon(
-            icon,
-            color: Theme.of(context).colorScheme.secondary,
-          ),
           onPressed: () {
             chooseUpload(context, viewModel);
           },
           mini: mini,
+          child: Icon(
+            icon,
+            color: Theme.of(context).colorScheme.secondary,
+          ),
         );
       },
     );
   }
 
   chooseUpload(BuildContext context, StatusViewModel viewModel) {
+
     return showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -59,7 +63,7 @@ class FabContainer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Center(
@@ -73,13 +77,13 @@ class FabContainer extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(),
-              ListTile(
-                leading: Icon(
+              const Divider(),
+           if(viewModel.isAiExpert==true && int.parse(viewModel.score.toString())>=7)ListTile(
+                leading: const Icon(
                   CupertinoIcons.photo_fill_on_rectangle_fill,
                   size: 25.0,
                 ),
-                title: Text('Make a post'),
+                title: const Text('Make a post'),
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.of(context).push(
@@ -90,11 +94,11 @@ class FabContainer extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: Icon(
+                leading: const Icon(
                   CupertinoIcons.camera_circle,
                   size: 25.0,
                 ),
-                title: Text('Add to story'),
+                title: const Text('Add to story'),
                 onTap: () async {
                   // Navigator.pop(context);
                   await viewModel.pickImage(context: context);

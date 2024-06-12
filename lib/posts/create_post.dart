@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_social_app/questionaire/questionaire.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
@@ -19,6 +20,13 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     currentUserId() {
@@ -26,7 +34,9 @@ class _CreatePostState extends State<CreatePost> {
     }
 
     PostsViewModel viewModel = Provider.of<PostsViewModel>(context);
-    return WillPopScope(
+    viewModel.isUserAiExpert(context);
+    return viewModel.isAiExpert==false?QuizScreen():
+    WillPopScope(
       onWillPop: () async {
         await viewModel.resetPost();
         return true;

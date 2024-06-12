@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_social_app/screens/mainscreen.dart';
+import 'package:fyp_social_app/utils/firebase.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -20,7 +22,7 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     RegisterViewModel viewModel = Provider.of<RegisterViewModel>(context);
-    return LoadingOverlay(
+    return   LoadingOverlay(
       progressIndicator: circularProgress(context),
       isLoading: viewModel.loading,
       child: Scaffold(
@@ -36,13 +38,13 @@ class _RegisterState extends State<Register> {
                 fontSize: 25.0,
               ),
             ),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             buildForm(viewModel, context),
-            SizedBox(height: 30.0),
+            const SizedBox(height: 30.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Already have an account  ',
                 ),
                 GestureDetector(
@@ -81,7 +83,7 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.usernameFN,
             nextFocusNode: viewModel.emailFN,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.mail_outline,
@@ -94,7 +96,7 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.emailFN,
             nextFocusNode: viewModel.countryFN,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.pin_outline,
@@ -107,7 +109,7 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.countryFN,
             nextFocusNode: viewModel.passFN,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           PasswordFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.lock_closed_outline,
@@ -122,7 +124,7 @@ class _RegisterState extends State<Register> {
             focusNode: viewModel.passFN,
             nextFocusNode: viewModel.cPassFN,
           ),
-          SizedBox(height: 20.0),
+          const SizedBox(height: 20.0),
           PasswordFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.lock_open_outline,
@@ -136,7 +138,7 @@ class _RegisterState extends State<Register> {
             },
             focusNode: viewModel.cPassFN,
           ),
-          SizedBox(height: 25.0),
+          const SizedBox(height: 25.0),
           Container(
             height: 45.0,
             width: 180.0,
@@ -152,7 +154,7 @@ class _RegisterState extends State<Register> {
               ),
               child: Text(
                 'sign up'.toUpperCase(),
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12.0,
                   fontWeight: FontWeight.w600,
@@ -166,3 +168,12 @@ class _RegisterState extends State<Register> {
     );
   }
 }
+
+
+
+
+
+
+
+
+

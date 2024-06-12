@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp_social_app/auth/register/profile_pic.dart';
+import 'package:fyp_social_app/auth/register/register.dart';
+import 'package:fyp_social_app/questionaire/questionaire.dart';
 import 'package:fyp_social_app/screens/mainscreen.dart';
 import 'package:fyp_social_app/services/auth_service.dart';
 

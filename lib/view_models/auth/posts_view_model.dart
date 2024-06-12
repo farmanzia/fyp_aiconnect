@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_social_app/questionaire/questionaire.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -52,6 +53,7 @@ class PostsViewModel extends ChangeNotifier {
   String? type;
   String? imgLink;
   String? id;
+  bool? isAiExpert;
 
   //locators
   Placemark? placemark;
@@ -282,5 +284,28 @@ class PostsViewModel extends ChangeNotifier {
   void showInSnackBar(String value, context) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));
+  }
+
+  isUserAiExpert(context){
+    if(firebaseAuth.currentUser?.uid!=null){
+      firestore.collection("users").doc(firebaseAuth.currentUser?.uid).get().then((value){
+       log("============ value['isAiExpert'] ${value['isAiExpert']}");
+        if(value['isAiExpert']==false){
+          isAiExpert=false;
+          // Navigator.of(context).pushReplacement(
+          //   CupertinoPageRoute(
+          //     builder: (_) => QuizScreen(),
+          //   ),
+          // );
+        }
+        else{
+          isAiExpert=true;
+        }
+      });
+    }
+
+    log("============ value[''] ${isAiExpert}");
+
+    notifyListeners();
   }
 }

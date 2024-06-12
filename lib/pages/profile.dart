@@ -37,6 +37,8 @@ class _ProfileState extends State<Profile> {
   UserModel? users;
   final DateTime timestamp = DateTime.now();
   ScrollController controller = ScrollController();
+  bool isAiExpert = false;
+  String score='0';
 
   currentUserId() {
     return firebaseAuth.currentUser?.uid;
@@ -46,6 +48,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     checkIfFollowing();
+    isUserAiExpert();
   }
 
   checkIfFollowing() async {
@@ -57,6 +60,25 @@ class _ProfileState extends State<Profile> {
     setState(() {
       isFollowing = doc.exists;
     });
+  }
+  isUserAiExpert(){
+    if(firebaseAuth.currentUser?.uid!=null){
+      firestore.collection("users").doc(firebaseAuth.currentUser?.uid).get().then((value){
+        log("============ value['isAiExpert'] ${value['isAiExpert']}");
+        if(value['isAiExpert']==false){
+          isAiExpert=false;
+          // Navigator.of(context).pushReplacement(
+          //   CupertinoPageRoute(
+          //     builder: (_) => QuizScreen(),
+          //   ),
+          // );
+        }
+        else{
+          isAiExpert=true;
+          score=value['score'];
+        }
+      });
+    }
   }
 
   @override
@@ -185,21 +207,40 @@ class _ProfileState extends State<Profile> {
                                         ),
                                         const SizedBox(width: 40.0),
                                         widget.profileId == currentUserId()
-                                            ? InkWell(
-                                                onTap: () {
-                                                  Navigator.of(context).push(
-                                                    CupertinoPageRoute(
-                                                      builder: (_) => Setting(),
+                                            ? Column(
+                                              children: [
+                                                InkWell(
+                                                    onTap: () {
+                                                      Navigator.of(context).push(
+                                                        CupertinoPageRoute(
+                                                          builder: (_) => Setting(),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Icon(
+                                                      Ionicons.settings_outline,
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .secondary,
                                                     ),
-                                                  );
-                                                },
-                                                child: Icon(
-                                                  Ionicons.settings_outline,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                                ),
-                                              )
+                                                  ),
+
+                                                isAiExpert==true && int.parse(score.toString())>=7?  const Row(
+                                                  children: [
+                                                    CircleAvatar(radius: 8,backgroundColor: Colors.green, child: Icon(Icons.done_outline,size: 8,),),
+                                                    Text(" expert ",style: TextStyle(fontSize: 10),)
+
+                                                  ],
+                                                ):const Row(
+                                                  children: [
+                                                    CircleAvatar(
+                                                      radius: 8, child: Icon(Icons.close,size: 8,),),
+                                                    Text(" expert ",style: TextStyle(fontSize: 10),)
+                                                  ],
+                                                )
+
+                                              ],
+                                            )
                                             : const SizedBox.shrink()
                                         // : buildLikeButton()
                                       ],
