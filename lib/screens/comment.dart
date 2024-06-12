@@ -82,7 +82,7 @@ class _CommentsState extends State<Comments> {
                           contentPadding: EdgeInsets.all(0),
                           title: CupertinoSearchTextField(
                             controller: commentsTEC,
-                            prefixIcon: SizedBox.shrink(),
+                            prefixIcon: const SizedBox.shrink(),
                             style: TextStyle(
                               fontSize: 15.0,
                               color:
@@ -92,14 +92,20 @@ class _CommentsState extends State<Comments> {
                           ),
                           trailing: GestureDetector(
                             onTap: () async {
-                              await services.uploadComment(
-                                currentUserId(),
-                                commentsTEC.text.trim(),
-                                widget.post!.postId!,
-                                widget.post!.ownerId!,
-                                widget.post!.mediaUrl!,
-                              );
-                              commentsTEC.clear();
+
+                              if(commentsTEC.text.isNotEmpty){
+                                await services.uploadComment(
+                                  currentUserId(),
+                                  commentsTEC.text.trim(),
+                                  widget.post!.postId!,
+                                  widget.post!.ownerId!,
+                                  widget.post!.mediaUrl!,
+                                );
+                                commentsTEC.clearComposing();
+                                commentsTEC.clear();
+                              }
+                              setState(() {
+                              });
                             },
                             child: Padding(
                               padding: const EdgeInsets.only(right: 10.0),

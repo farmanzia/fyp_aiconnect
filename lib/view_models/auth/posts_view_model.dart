@@ -286,26 +286,5 @@ class PostsViewModel extends ChangeNotifier {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));
   }
 
-  isUserAiExpert(context){
-    if(firebaseAuth.currentUser?.uid!=null){
-      firestore.collection("users").doc(firebaseAuth.currentUser?.uid).get().then((value){
-       log("============ value['isAiExpert'] ${value['isAiExpert']}");
-        if(value['isAiExpert']==false){
-          isAiExpert=false;
-          // Navigator.of(context).pushReplacement(
-          //   CupertinoPageRoute(
-          //     builder: (_) => QuizScreen(),
-          //   ),
-          // );
-        }
-        else{
-          isAiExpert=true;
-        }
-      });
-    }
 
-    log("============ value[''] ${isAiExpert}");
-
-    notifyListeners();
-  }
 }

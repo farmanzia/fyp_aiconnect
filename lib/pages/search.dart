@@ -76,7 +76,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
         automaticallyImplyLeading: false,
         title: Text(
           Constants.appName,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 25.0,
             fontWeight: FontWeight.w900,
           ),
@@ -91,7 +91,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: buildSearch(),
             ),
             buildUsers(),
@@ -124,7 +124,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
   buildUsers() {
     if (!loading) {
       if (filteredUsers.isEmpty) {
-        return Center(
+        return const Center(
           child: Text(
             "No User Found",
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -140,7 +140,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
                 UserModel user =
                     UserModel.fromJson(doc.data() as Map<String, dynamic>);
                 if (doc.id == currentUserId()) {
-                  Timer(Duration(milliseconds: 500), () {
+                  Timer(const Duration(milliseconds: 500), () {
                     setState(() {
                       removeFromList(index);
                     });
@@ -155,8 +155,8 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
                               Theme.of(context).colorScheme.secondary,
                           child: Center(
                             child: Text(
-                              '${user.username![0].toUpperCase()}',
-                              style: TextStyle(
+                              user.username![0].toUpperCase(),
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w900,
@@ -172,7 +172,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
                         ),
                   title: Text(
                     user.username!,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   subtitle: Text(
                     user.email!,
@@ -233,8 +233,8 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
         );
       }
     } else {
-      return Padding(
-        padding: const EdgeInsets.only(top: 20.0),
+      return const Padding(
+        padding: EdgeInsets.only(top: 20.0),
         child: Center(
           child: CupertinoActivityIndicator(),
         ),

@@ -164,7 +164,7 @@ class StatusViewModel extends ChangeNotifier {
       });
     }
 
-    log("========score $score==== value[''] $isAiExpert");
+    log("=====${isAiExpert==true || int.parse(score.toString())<=7}===score $score==== value[''] $isAiExpert");
 
     notifyListeners();
   }

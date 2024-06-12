@@ -40,7 +40,7 @@ class AuthService {
       'photoUrl': user.photoURL ?? '',
       'gender': '',
       'isAiExpert':false,
-      'score':0
+      'score':'0'
     });
   }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,35 +22,40 @@ class CreatePost extends StatefulWidget {
 }
 
 class _CreatePostState extends State<CreatePost> {
-
+bool isAiExpert=false;
+bool isLoading=false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    isUserAiExpert();
   }
 
   @override
   Widget build(BuildContext context) {
+
+
+
     currentUserId() {
       return firebaseAuth.currentUser!.uid;
     }
 
     PostsViewModel viewModel = Provider.of<PostsViewModel>(context);
-    viewModel.isUserAiExpert(context);
-    return viewModel.isAiExpert==false?QuizScreen():
+
+    return
     WillPopScope(
       onWillPop: () async {
         await viewModel.resetPost();
         return true;
       },
-      child: LoadingOverlay(
+      child: isAiExpert==false?QuizScreen(): LoadingOverlay(
         progressIndicator: circularProgress(context),
         isLoading: viewModel.loading,
         child: Scaffold(
           key: viewModel.scaffoldKey,
           appBar: AppBar(
             leading: IconButton(
-              icon: Icon(Ionicons.close_outline),
+              icon: const Icon(Ionicons.close_outline),
               onPressed: () {
                 viewModel.resetPost();
                 Navigator.pop(context);
@@ -321,5 +328,28 @@ class _CreatePostState extends State<CreatePost> {
         );
       },
     );
+  }
+  isUserAiExpert(){
+    if(firebaseAuth.currentUser?.uid!=null){
+      firestore.collection("users").doc(firebaseAuth.currentUser?.uid).get().then((value){
+        log("============ value['isAiExpert'] ${value['isAiExpert']}");
+        if(value['isAiExpert']==false){
+          isAiExpert=false;
+          // Navigator.of(context).pushReplacement(
+          //   CupertinoPageRoute(
+          //     builder: (_) => QuizScreen(),
+          //   ),
+          // );
+        }
+        else{
+          isAiExpert=true;
+        }
+        setState(() {
+
+        });
+      });
+    }
+
+    log("============ value[''] ${isAiExpert}");
   }
 }

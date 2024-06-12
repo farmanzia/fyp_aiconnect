@@ -32,9 +32,6 @@ late bool isAiExpert=false;
       },
     );
     super.initState();
-    
-
-    
   }
 
   @override
@@ -94,7 +91,7 @@ late bool isAiExpert=false;
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const StoryWidget(),
+              // const StoryWidget(),
               Flexible(
                 child: ListView.builder(
                   controller: viewModel.scrollController,

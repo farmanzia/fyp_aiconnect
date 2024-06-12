@@ -248,29 +248,29 @@ class _ConversationState extends State<Conversation> {
                         ),
                       ),
                       SizedBox(height: 5.0),
-                      StreamBuilder(
-                        stream: chatRef.doc('${widget.chatId}').snapshots(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            DocumentSnapshot? snap =
-                                snapshot.data as DocumentSnapshot<Object?>;
-                            Map? data = snap.data() as Map<dynamic, dynamic>?;
-                            Map? usersTyping = data?['typing'] ?? {};
-                            return Text(
-                              _buildOnlineText(
-                                user,
-                                usersTyping![widget.userId] ?? false,
-                              ),
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 11,
-                              ),
-                            );
-                          } else {
-                            return SizedBox();
-                          }
-                        },
-                      ),
+                      // StreamBuilder(
+                      //   stream: chatRef.doc(widget.chatId).snapshots(),
+                      //   builder: (context, snapshot) {
+                      //     if (snapshot.hasData) {
+                      //       DocumentSnapshot? snap =
+                      //           snapshot.data as DocumentSnapshot<Object?>;
+                      //       Map? data = snap.data() as Map<dynamic, dynamic>?;
+                      //       Map? usersTyping = data?['typing'] ?? {};
+                      //       return Text(
+                      //         _buildOnlineText(
+                      //           user,
+                      //           usersTyping![widget.userId] ?? false,
+                      //         ),
+                      //         style: const TextStyle(
+                      //           fontWeight: FontWeight.w400,
+                      //           fontSize: 11,
+                      //         ),
+                      //       );
+                      //     } else {
+                      //       return SizedBox();
+                      //     }
+                      //   },
+                      // ),
                     ],
                   ),
                 ),

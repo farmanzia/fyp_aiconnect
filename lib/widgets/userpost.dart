@@ -59,7 +59,7 @@ class UserPost extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 55.0, bottom: 10),
                       child: ClipRRect(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(0.0),
                           topRight: Radius.circular(0.0),
                         ),
@@ -78,14 +78,14 @@ class UserPost extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 0.0, top: 3.0),
                         child: Text(
                           '${post?.description ?? "".trim()}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 15.0,
                           ),
                           maxLines: 2,
                         ),
                       ),
                     ),
-                    SizedBox(height: 5.0),
+                    const SizedBox(height: 5.0),
                     Row(
                       children: [
                         InkWell(
@@ -97,12 +97,12 @@ class UserPost extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Icon(
+                          child: const Icon(
                             Ionicons.chatbox_ellipses,
                             size: 25.0,
                           ),
                         ),
-                        SizedBox(width: 5.0),
+                        const SizedBox(width: 5.0),
                         StreamBuilder(
                           stream: commentRef
                               .doc(post!.postId!)
@@ -120,9 +120,9 @@ class UserPost extends StatelessWidget {
                             }
                           },
                         ),
-                        Spacer(),
+                        const Spacer(),
                         buildLikeButton(),
-                        SizedBox(width: 5.0),
+                        const SizedBox(width: 5.0),
                         StreamBuilder(
                           stream: likesRef
                               .where('postId', isEqualTo: post!.postId)
@@ -142,7 +142,7 @@ class UserPost extends StatelessWidget {
                     ),
                     Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 3.0, vertical: 5.0),
+                          const EdgeInsets.symmetric(horizontal: 3.0, vertical: 5.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +151,7 @@ class UserPost extends StatelessWidget {
                             padding: const EdgeInsets.all(3.0),
                             child: Text(
                               timeago.format(post!.timestamp!.toDate()),
-                              style: TextStyle(fontSize: 10.0),
+                              style: const TextStyle(fontSize: 10.0),
                             ),
                           ),
                           // SizedBox(height: 5.0),
@@ -200,8 +200,8 @@ class UserPost extends StatelessWidget {
             onTap: onLikeButtonTapped,
             size: 25.0,
             circleColor:
-                CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
-            bubblesColor: BubblesColor(
+                const CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
+            bubblesColor: const BubblesColor(
               dotPrimaryColor: Color(0xffFFA500),
               dotSecondaryColor: Color(0xffd8392b),
               dotThirdColor: Color(0xffFF69B4),
@@ -248,7 +248,7 @@ class UserPost extends StatelessWidget {
       padding: const EdgeInsets.only(left: 0.0, right: 5.0),
       child: Text(
         '$count likes',
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 12.5,
         ),
@@ -261,7 +261,7 @@ class UserPost extends StatelessWidget {
       padding: const EdgeInsets.only(top: 0.5),
       child: Text(
         ' $count  comments',
-        style: TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
+        style: const TextStyle(fontSize: 12.5, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -299,7 +299,7 @@ class UserPost extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 '${user.username![0].toUpperCase()}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w900,
@@ -313,7 +313,7 @@ class UserPost extends StatelessWidget {
                               '${user.photoUrl}',
                             ),
                           ),
-                    SizedBox(width: 5.0),
+                    const SizedBox(width: 5.0),
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -321,7 +321,7 @@ class UserPost extends StatelessWidget {
                       children: [
                         Text(
                           '${post?.username?.trim() ?? ""}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.w900,
                             // color: Colors.black,
                           ),
@@ -329,7 +329,7 @@ class UserPost extends StatelessWidget {
                         ),
                         Text(
                           '${post?.location?.trim() ?? 'Wooble'}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 10.0,
                             // color: Color(0xff4D4D4D),
                           ),
