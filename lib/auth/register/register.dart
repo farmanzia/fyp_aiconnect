@@ -100,11 +100,17 @@ class _RegisterState extends State<Register> {
           TextFormBuilder(
             enabled: !viewModel.loading,
             prefix: Ionicons.pin_outline,
-            hintText: "Country",
+            hintText: "Phone Number",
             textInputAction: TextInputAction.next,
-            validateFunction: Validations.validateName,
+            textInputType: TextInputType.phone,
+            validateFunction: (val){
+              if(val!.isEmpty || val==''){
+                return 'required';
+              }
+              return null;
+            },
             onSaved: (String val) {
-              viewModel.setCountry(val);
+              viewModel.setPhoneNumber(val);
             },
             focusNode: viewModel.countryFN,
             nextFocusNode: viewModel.passFN,

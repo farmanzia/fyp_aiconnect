@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fyp_social_app/auth/register/register.dart';
-import 'package:fyp_social_app/questionaire/questionaire.dart';
 import 'package:fyp_social_app/utils/firebase.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -53,10 +51,10 @@ class MyAppState extends State<MyApp> {
             theme: themeData(
               notifier.dark ? Constants.darkTheme : Constants.lightTheme,
             ),
-            home: StreamBuilder(
+            home: true? SplashScreen(): StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: ((BuildContext context, snapshot) {
-                if (snapshot.hasData) {
+                  if (snapshot.hasData) {
                   return TabScreen();
                 } else {
                   return Landing();
@@ -81,15 +79,16 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     Timer(const Duration(seconds: 4), () {
-      Navigator.of(context).push(
-        CupertinoPageRoute(
-          builder: (_) => MyApp(),
-        ),
-      );
+  if(firebaseAuth.currentUser!=null){
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>TabScreen()), (route) => false);
+
+  } else {
+    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_)=>Landing()), (route) => false);
+
+  }
     });
 
-    return MaterialApp(
-      home: Scaffold(
+    return  Scaffold(
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +98,7 @@ class SplashScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
+
     );
   }
 }

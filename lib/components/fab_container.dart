@@ -77,23 +77,8 @@ class FabContainer extends StatelessWidget {
                 ),
               ),
               const Divider(),
-           // if(viewModel.isAiExpert==false && int.parse(viewModel.score.toString())==0)
-           //   ListTile(
-           //      leading: const Icon(
-           //        CupertinoIcons.photo_fill_on_rectangle_fill,
-           //        size: 25.0,
-           //      ),
-           //      title: const Text('Make a post'),
-           //      onTap: () {
-           //        Navigator.pop(context);
-           //        Navigator.of(context).push(
-           //          CupertinoPageRoute(
-           //            builder: (_) => CreatePost(),
-           //          ),
-           //        );
-           //      },
-           //    ),
-           if(viewModel.isAiExpert==true && int.parse(viewModel.score.toString())>=7)ListTile(
+           if(viewModel.isAiExpert==false && int.parse(viewModel.score.toString())==0)
+             ListTile(
                 leading: const Icon(
                   CupertinoIcons.photo_fill_on_rectangle_fill,
                   size: 25.0,
@@ -108,6 +93,21 @@ class FabContainer extends StatelessWidget {
                   );
                 },
               ),
+           // if(viewModel.isAiExpert==true && int.parse(viewModel.score.toString())>=7)ListTile(
+           //      leading: const Icon(
+           //        CupertinoIcons.photo_fill_on_rectangle_fill,
+           //        size: 25.0,
+           //      ),
+           //      title: const Text('Make a post'),
+           //      onTap: () {
+           //        Navigator.pop(context);
+           //        Navigator.of(context).push(
+           //          CupertinoPageRoute(
+           //            builder: (_) => CreatePost(),
+           //          ),
+           //        );
+           //      },
+           //    ),
               // ListTile(
               //   leading: const Icon(
               //     CupertinoIcons.camera_circle,

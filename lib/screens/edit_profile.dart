@@ -138,14 +138,18 @@ class _EditProfileState extends State<EditProfile> {
             ),
             SizedBox(height: 10.0),
             TextFormBuilder(
-              initialValue: widget.user!.country,
+              initialValue: widget.user!.phoneNumber,
               enabled: !viewModel.loading,
               prefix: Ionicons.pin_outline,
-              hintText: "Country",
+              hintText: "Phone Number",
               textInputAction: TextInputAction.next,
-              validateFunction: Validations.validateName,
-              onSaved: (String val) {
-                viewModel.setCountry(val);
+              validateFunction: (val){
+                if(val!.isEmpty || val==''){
+                  return 'required';
+                }
+                return null;
+              },              onSaved: (String val) {
+                viewModel.setphoneNumber(val);
               },
             ),
             SizedBox(height: 10.0),

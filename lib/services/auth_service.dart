@@ -13,14 +13,14 @@ class AuthService {
       {String? name,
       User? user,
       String? email,
-      String? country,
+      String? phoneNumber,
       String? password}) async {
     var res = await firebaseAuth.createUserWithEmailAndPassword(
       email: '$email',
       password: '$password',
     );
     if (res.user != null) {
-      await saveUserToFirestore(name!, res.user!, email!, country!);
+      await saveUserToFirestore(name!, res.user!, email!, phoneNumber!);
       return true;
     } else {
       return false;
@@ -29,14 +29,14 @@ class AuthService {
 
 //this will save the details inputted by the user to firestore.
   saveUserToFirestore(
-      String name, User user, String email, String country) async {
+      String name, User user, String email, String phoneNumber) async {
     await usersRef.doc(user.uid).set({
       'username': name,
       'email': email,
       'time': Timestamp.now(),
       'id': user.uid,
       'bio': "",
-      'country': country,
+      'phoneNumber': phoneNumber,
       'photoUrl': user.photoURL ?? '',
       'gender': '',
       'isAiExpert':false,

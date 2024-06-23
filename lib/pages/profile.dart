@@ -151,6 +151,17 @@ class _ProfileState extends State<Profile> {
                   ),
                   const SizedBox(height: 8,),
 
+                  Text(
+                    user.phoneNumber??"",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Theme.of(context)
+                          .iconTheme
+                          .color,
+                    ),
+                  ),
+                  const SizedBox(height: 8,),
+
                   FittedBox(
                     child: Row(
                       mainAxisAlignment:MainAxisAlignment.center,
@@ -388,7 +399,7 @@ class _ProfileState extends State<Profile> {
                                             SizedBox(
                                               width: 130.0,
                                               child: Text(
-                                                user.country!,
+                                                user.phoneNumber!,
                                                 style: TextStyle(
                                                   fontSize: 12.0,
                                                   color: Theme.of(context)
