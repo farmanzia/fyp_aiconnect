@@ -35,6 +35,8 @@ class _EditProfileState extends State<EditProfile> {
       child: Scaffold(
         key: viewModel.scaffoldKey,
         appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+
           centerTitle: true,
           title: Text("Edit Profile"),
           actions: [
@@ -58,6 +60,7 @@ class _EditProfileState extends State<EditProfile> {
         ),
         body: ListView(
           children: [
+            SizedBox(height: 16,),
             Center(
               child: GestureDetector(
                 onTap: () => viewModel.pickImage(),

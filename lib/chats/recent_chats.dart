@@ -107,7 +107,7 @@ class _ChatsState extends State<Chats> {
     return chatRef
         .doc(documentId)
         .collection('messages')
-        // .orderBy('time', descending: true)
+        .orderBy('time', descending: true)
         .snapshots();
   }
 }

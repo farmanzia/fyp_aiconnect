@@ -1,6 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:fyp_social_app/testappchat.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:fyp_social_app/components/fab_container.dart';
@@ -27,8 +29,8 @@ class _TabScreenState extends State<TabScreen> {
       'index': 0,
     },
     {
-      'title': 'Search',
-      'icon': Iconsax.search_normal,
+      'title': 'People',
+      'icon': Icons.person_2_outlined,
       'page': Search(),
       'index': 1,
     },
@@ -39,9 +41,10 @@ class _TabScreenState extends State<TabScreen> {
       'index': 2,
     },
     {
-      'title': 'Reels',
-      'icon': Iconsax.video_square,
-      'page': WoobleReels(),
+      'title': 'Community',
+      'icon': Iconsax.people,
+      // 'page': WoobleReels(),
+      'page': GroupListScreen(),
       'index': 3,
     },
     {
@@ -70,32 +73,60 @@ class _TabScreenState extends State<TabScreen> {
         child: pages[_page]['page'],
       ),
       bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(width: 5),
-            for (Map item in pages)
-              item['index'] == 2
-                  ? buildFab()
-                  : Padding(
-                      padding: const EdgeInsets.only(top: 5.0),
-                      child: IconButton(
-                        icon: Icon(
-                          item['icon'],
-                          color: item['index'] != _page
-                              ? Theme.of(context).brightness == Brightness.dark
-                                  ? Colors.white
-                                  : Colors.black
-                              : Theme.of(context).colorScheme.secondary,
-                          size: 25.0,
+        // color: Theme.of(context).colorScheme.secondary,
+        child: Container(
+          margin: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+              // borderRadius: const BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20))),
+              borderRadius: BorderRadius.circular(20)),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(width: 5),
+              for (Map item in pages)
+                item['index'] == 2
+                    ? buildFab()
+                    : Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            GestureDetector(
+                              child: Icon(
+                                item['icon'],
+                                color: item['index'] != _page
+                                    ? Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : Colors.black
+                                    : Theme.of(context).colorScheme.secondary,
+                                size: 25.0,
+                              ),
+                              onTap: () => navigationTapped(item['index']),
+                            ),
+                            Text(
+                              item['title'],
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: item['index'] != _page
+                                      ? Theme.of(context).brightness ==
+                                              Brightness.dark
+                                          ? Colors.white
+                                          : Colors.black
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .secondary),
+                            ),
+                          ],
                         ),
-                        onPressed: () => navigationTapped(item['index']),
                       ),
-                    ),
-            SizedBox(width: 5),
-          ],
+              SizedBox(width: 5),
+            ],
+          ),
         ),
       ),
     );
@@ -119,7 +150,3 @@ class _TabScreenState extends State<TabScreen> {
     });
   }
 }
-
-
-
-

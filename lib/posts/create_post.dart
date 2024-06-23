@@ -104,11 +104,13 @@ bool isLoading=false;
                     return ListTile(
                       leading: CircleAvatar(
                         radius: 30.0,
-                        backgroundImage: NetworkImage(user.photoUrl!),
+                        backgroundColor: Theme.of(context).colorScheme.secondary,
+                        backgroundImage:   NetworkImage(user.photoUrl!),
+                        child: user.photoUrl!.isEmpty ?Text(user.username!.substring(0,1).toUpperCase()):null,
                       ),
                       title: Text(
                         user.username!,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
                         user.email!,
@@ -203,80 +205,80 @@ bool isLoading=false;
                 onChanged: (val) => viewModel.setDescription(val),
               ),
               SizedBox(height: 20.0),
-              Text(
-                'Location',
-                style: TextStyle(
-                  fontSize: 15.0,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              ListTile(
-                contentPadding: EdgeInsets.all(0.0),
-                title: Container(
-                  width: 250.0,
-                  height: 40.0,
-                  decoration: Theme.of(context).brightness == Brightness.dark
-                      ? BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.1),
-                              blurRadius: 2.0,
-                            ),
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.4),
-                              offset: Offset(6.0, 6.0),
-                              blurRadius: 10.0,
-                            ),
-                          ],
-                          color: Color(0xff2B2B2B),
-                          borderRadius: BorderRadius.circular(12.0),
-                        )
-                      : BoxDecoration(
-                          border: Border.all(
-                            color: Colors.grey.withOpacity(0.2),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.white.withOpacity(0.8),
-                              offset: Offset(-6.0, -6.0),
-                              blurRadius: 16.0,
-                            ),
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.1),
-                              offset: Offset(6.0, 6.0),
-                              blurRadius: 10.0,
-                            ),
-                          ],
-                          color: Color(0xFFEFEEEE),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: TextFormField(
-                        controller: viewModel.locationTEC,
-                        decoration: InputDecoration.collapsed(
-                          // contentPadding: EdgeInsets.all(0.0),
-                          hintText: 'United States, Los Angeles!',
-                          // focusedBorder: UnderlineInputBorder(),
-                        ),
-                        maxLines: null,
-                        onChanged: (val) => viewModel.setLocation(val),
-                      ),
-                    ),
-                  ),
-                ),
-                trailing: IconButton(
-                  tooltip: "Use your current location",
-                  icon: Icon(
-                    Iconsax.location,
-                    size: 25.0,
-                  ),
-                  iconSize: 30.0,
-                  color: Theme.of(context).colorScheme.secondary,
-                  onPressed: () => viewModel.getLocation(),
-                ),
-              ),
+              // Text(
+              //   'Location',
+              //   style: TextStyle(
+              //     fontSize: 15.0,
+              //     fontWeight: FontWeight.w600,
+              //   ),
+              // ),
+              // ListTile(
+              //   contentPadding: EdgeInsets.all(0.0),
+              //   title: Container(
+              //     width: 250.0,
+              //     height: 40.0,
+              //     decoration: Theme.of(context).brightness == Brightness.dark
+              //         ? BoxDecoration(
+              //             boxShadow: [
+              //               BoxShadow(
+              //                 color: Colors.white.withOpacity(0.1),
+              //                 blurRadius: 2.0,
+              //               ),
+              //               BoxShadow(
+              //                 color: Colors.black.withOpacity(0.4),
+              //                 offset: Offset(6.0, 6.0),
+              //                 blurRadius: 10.0,
+              //               ),
+              //             ],
+              //             color: Color(0xff2B2B2B),
+              //             borderRadius: BorderRadius.circular(12.0),
+              //           )
+              //         : BoxDecoration(
+              //             border: Border.all(
+              //               color: Colors.grey.withOpacity(0.2),
+              //             ),
+              //             boxShadow: [
+              //               BoxShadow(
+              //                 color: Colors.white.withOpacity(0.8),
+              //                 offset: Offset(-6.0, -6.0),
+              //                 blurRadius: 16.0,
+              //               ),
+              //               BoxShadow(
+              //                 color: Colors.black.withOpacity(0.1),
+              //                 offset: Offset(6.0, 6.0),
+              //                 blurRadius: 10.0,
+              //               ),
+              //             ],
+              //             color: Color(0xFFEFEEEE),
+              //             borderRadius: BorderRadius.circular(12.0),
+              //           ),
+              //     child: Center(
+              //       child: Padding(
+              //         padding: const EdgeInsets.all(5.0),
+              //         child: TextFormField(
+              //           controller: viewModel.locationTEC,
+              //           decoration: InputDecoration.collapsed(
+              //             // contentPadding: EdgeInsets.all(0.0),
+              //             hintText: 'United States, Los Angeles!',
+              //             // focusedBorder: UnderlineInputBorder(),
+              //           ),
+              //           maxLines: null,
+              //           onChanged: (val) => viewModel.setLocation(val),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              //   trailing: IconButton(
+              //     tooltip: "Use your current location",
+              //     icon: Icon(
+              //       Iconsax.location,
+              //       size: 25.0,
+              //     ),
+              //     iconSize: 30.0,
+              //     color: Theme.of(context).colorScheme.secondary,
+              //     onPressed: () => viewModel.getLocation(),
+              //   ),
+              // ),
             ],
           ),
         ),

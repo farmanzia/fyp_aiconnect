@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fyp_social_app/auth/register/register.dart';
 import 'package:fyp_social_app/questionaire/questionaire.dart';
@@ -17,9 +20,8 @@ import 'package:fyp_social_app/view_models/theme/theme_view_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Config.initFirebase();
-  runApp(const MyApp());
+  runApp( MyApp());
 }
-
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -66,7 +68,6 @@ class MyAppState extends State<MyApp> {
       ),
     );
   }
-
   ThemeData themeData(ThemeData theme) {
     return theme.copyWith(
       textTheme: GoogleFonts.lexendTextTheme(
@@ -75,4 +76,30 @@ class MyAppState extends State<MyApp> {
     );
   }
 }
+class SplashScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
 
+    Timer(const Duration(seconds: 4), () {
+      Navigator.of(context).push(
+        CupertinoPageRoute(
+          builder: (_) => MyApp(),
+        ),
+      );
+    });
+
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Your splash screen content here (e.g., image, text)
+              Image.asset('assets/images/new1.png'),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

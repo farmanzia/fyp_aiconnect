@@ -148,7 +148,6 @@ class StatusViewModel extends ChangeNotifier {
   isUserAiExpert(context){
     if(firebaseAuth.currentUser?.uid!=null){
       firestore.collection("users").doc(firebaseAuth.currentUser?.uid).get().then((value){
-        log("============ value['isAiExpert'] ${value['isAiExpert']}");
         if(value['isAiExpert']==false){
           isAiExpert=false;
           // Navigator.of(context).pushReplacement(
@@ -161,11 +160,8 @@ class StatusViewModel extends ChangeNotifier {
           isAiExpert=true;
           score=value['score'];
         }
+        notifyListeners();
       });
     }
-
-    log("=====${isAiExpert==true || int.parse(score.toString())<=7}===score $score==== value[''] $isAiExpert");
-
-    notifyListeners();
   }
 }

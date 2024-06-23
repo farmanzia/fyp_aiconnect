@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:fyp_social_app/auth/register/register.dart';
@@ -64,14 +65,8 @@ class _ProfileState extends State<Profile> {
   isUserAiExpert(){
     if(firebaseAuth.currentUser?.uid!=null){
       firestore.collection("users").doc(firebaseAuth.currentUser?.uid).get().then((value){
-        log("============ value['isAiExpert'] ${value['isAiExpert']}");
         if(value['isAiExpert']==false){
           isAiExpert=false;
-          // Navigator.of(context).pushReplacement(
-          //   CupertinoPageRoute(
-          //     builder: (_) => QuizScreen(),
-          //   ),
-          // );
         }
         else{
           isAiExpert=true;
@@ -85,6 +80,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
         title: Text(
           Constants.appName,
           style: const TextStyle(
@@ -94,7 +90,222 @@ class _ProfileState extends State<Profile> {
         ),
         centerTitle: true,
       ),
-      body: CustomScrollView(
+      body: true? Column(
+
+        children: [
+        StreamBuilder(
+          stream: usersRef.doc(widget.profileId).snapshots(),
+          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+            if (snapshot.hasData) {
+              UserModel user = UserModel.fromJson(
+                snapshot.data!.data() as Map<String, dynamic>,
+              );
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 16,),
+                  user.photoUrl!.isEmpty
+                      ? CircleAvatar(
+                    radius: 40.0,
+                    backgroundColor: Theme.of(context)
+                        .colorScheme
+                        .secondary,
+                    child: Center(
+                      child: Text(
+                        user.username![0].toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15.0,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                    ),
+                  )
+                      : CircleAvatar(
+                    radius: 40.0,
+                    backgroundImage:
+                    CachedNetworkImageProvider(
+                      '${user.photoUrl}',
+                    ),
+                  ),
+                  const SizedBox(height: 8,),
+                  Text(
+                    user.username!,
+                    style: const TextStyle(
+                      fontSize: 15.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: null,
+                  ),
+                  const SizedBox(height: 8,),
+
+                  Text(
+                    user.email!,
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      color: Theme.of(context)
+                          .iconTheme
+                          .color,
+                    ),
+                  ),
+                  const SizedBox(height: 8,),
+
+                  FittedBox(
+                    child: Row(
+                      mainAxisAlignment:MainAxisAlignment.center,
+                      children: [
+                        widget.profileId == currentUserId()
+                            ? Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  CupertinoPageRoute(
+                                    builder: (_) => Setting(),
+                                  ),
+                                );
+                              },
+                              child: Icon(
+                                Ionicons.settings_outline,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .secondary,
+                              ),
+                            ),
+
+                            isAiExpert==true && int.parse(score.toString())>=7?  const Row(
+                              children: [
+                                CircleAvatar(radius: 8,backgroundColor: Colors.green, child: Icon(Icons.done_outline,size: 8,),),
+                                Text(" expert ",style: TextStyle(fontSize: 10),)
+
+                              ],
+                            ):const Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 8, child: Icon(Icons.close,size: 8,),),
+                                Text(" expert ",style: TextStyle(fontSize: 10),)
+                              ],
+                            )
+
+                          ],
+                        )
+                            : const SizedBox.shrink()
+                        // : buildLikeButton()
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, left: 20.0),
+                    child: user.bio!.isEmpty
+                        ? Container()
+                        : SizedBox(
+                      width: 200,
+                      child: Text(
+                        user.bio!,
+                        style: const TextStyle(
+                          fontSize: 12.0,
+                        ),
+                        maxLines: null,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  Padding(
+                    padding:
+                    const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Expanded(
+                          child
+                              : StreamBuilder(
+                            stream: postRef
+                                .where('ownerId',
+                                isEqualTo: widget.profileId)
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                QuerySnapshot<Object?>? snap =
+                                    snapshot.data;
+                                List<DocumentSnapshot> docs = snap!.docs;
+                                return buildCount(
+                                    "Posts", docs.length ?? 0);
+                              } else {
+                                return buildCount("Posts", 0);
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(width:8),
+                        Expanded(
+                          child: StreamBuilder(
+                            stream: followersRef
+                                .doc(widget.profileId)
+                                .collection('userFollowers')
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                QuerySnapshot<Object?>? snap =
+                                    snapshot.data;
+                                List<DocumentSnapshot> docs = snap!.docs;
+                                return buildCount(
+                                    "Followers", docs.length ?? 0);
+                              } else {
+                                return buildCount("Followers", 0);
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(width:8),
+                        Expanded(
+                          child: StreamBuilder(
+                            stream: followingRef
+                                .doc(widget.profileId)
+                                .collection('userFollowing')
+                                .snapshots(),
+                            builder: (context,
+                                AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.hasData) {
+                                QuerySnapshot<Object?>? snap =
+                                    snapshot.data;
+                                List<DocumentSnapshot> docs = snap!.docs;
+                                return buildCount(
+                                    "Following", docs.length ?? 0);
+                              } else {
+                                return buildCount("Following", 0);
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 10.0),
+                  const SizedBox(height:12),
+                  buildProfileButton(user),
+
+                ],
+              );
+            }
+            return Container();
+          },
+        ),
+          const SizedBox(height:12),
+          const Text(
+            'My Posts',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 14.0,
+            ),
+          ),
+          const SizedBox(height:12),
+          Expanded(
+            child:   buildPostView(),
+          )
+      ],):  CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             automaticallyImplyLeading: false,
@@ -114,6 +325,8 @@ class _ProfileState extends State<Profile> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(height: 16,),
+
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -268,82 +481,75 @@ class _ProfileState extends State<Profile> {
                         ),
                         const SizedBox(height: 10.0),
                         Container(
-                          height: 50.0,
+                          // height: 50.0,
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 30.0),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                StreamBuilder(
-                                  stream: postRef
-                                      .where('ownerId',
-                                          isEqualTo: widget.profileId)
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasData) {
-                                      QuerySnapshot<Object?>? snap =
-                                          snapshot.data;
-                                      List<DocumentSnapshot> docs = snap!.docs;
-                                      return buildCount(
-                                          "Posts", docs.length ?? 0);
-                                    } else {
-                                      return buildCount("Posts", 0);
-                                    }
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 15.0),
-                                  child: Container(
-                                    height: 50.0,
-                                    width: 0.3,
-                                    color: Colors.grey,
+                                Expanded(
+                                  child
+                                      : StreamBuilder(
+                                    stream: postRef
+                                        .where('ownerId',
+                                            isEqualTo: widget.profileId)
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasData) {
+                                        QuerySnapshot<Object?>? snap =
+                                            snapshot.data;
+                                        List<DocumentSnapshot> docs = snap!.docs;
+                                        return buildCount(
+                                            "Posts", docs.length ?? 0);
+                                      } else {
+                                        return buildCount("Posts", 0);
+                                      }
+                                    },
                                   ),
                                 ),
-                                StreamBuilder(
-                                  stream: followersRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowers')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasData) {
-                                      QuerySnapshot<Object?>? snap =
-                                          snapshot.data;
-                                      List<DocumentSnapshot> docs = snap!.docs;
-                                      return buildCount(
-                                          "Followers", docs.length ?? 0);
-                                    } else {
-                                      return buildCount("Followers", 0);
-                                    }
-                                  },
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 15.0),
-                                  child: Container(
-                                    height: 50.0,
-                                    width: 0.3,
-                                    color: Colors.grey,
+                                const SizedBox(width:8),
+                                Expanded(
+                                  child: StreamBuilder(
+                                    stream: followersRef
+                                        .doc(widget.profileId)
+                                        .collection('userFollowers')
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasData) {
+                                        QuerySnapshot<Object?>? snap =
+                                            snapshot.data;
+                                        List<DocumentSnapshot> docs = snap!.docs;
+                                        return buildCount(
+                                            "Followers", docs.length ?? 0);
+                                      } else {
+                                        return buildCount("Followers", 0);
+                                      }
+                                    },
                                   ),
                                 ),
-                                StreamBuilder(
-                                  stream: followingRef
-                                      .doc(widget.profileId)
-                                      .collection('userFollowing')
-                                      .snapshots(),
-                                  builder: (context,
-                                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                                    if (snapshot.hasData) {
-                                      QuerySnapshot<Object?>? snap =
-                                          snapshot.data;
-                                      List<DocumentSnapshot> docs = snap!.docs;
-                                      return buildCount(
-                                          "Following", docs.length ?? 0);
-                                    } else {
-                                      return buildCount("Following", 0);
-                                    }
-                                  },
+                               const SizedBox(width:8),
+                                Expanded(
+                                  child: StreamBuilder(
+                                    stream: followingRef
+                                        .doc(widget.profileId)
+                                        .collection('userFollowing')
+                                        .snapshots(),
+                                    builder: (context,
+                                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                                      if (snapshot.hasData) {
+                                        QuerySnapshot<Object?>? snap =
+                                            snapshot.data;
+                                        List<DocumentSnapshot> docs = snap!.docs;
+                                        return buildCount(
+                                            "Following", docs.length ?? 0);
+                                      } else {
+                                        return buildCount("Following", 0);
+                                      }
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -410,25 +616,34 @@ class _ProfileState extends State<Profile> {
   }
 
   buildCount(String label, int count) {
-    return Column(
-      children: <Widget>[
-        Text(
-          count.toString(),
-          style: const TextStyle(
-            fontSize: 16.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Ubuntu-Regular',
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: <Widget>[
+            Text(
+              count.toString(),
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Ubuntu-Regular',
+              ),
+            ),
+            const SizedBox(height: 3.0),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 15,
+                fontFamily: 'Ubuntu-Regular',
+              ),
+            )
+          ],
         ),
-        const SizedBox(height: 3.0),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 15,
-            fontFamily: 'Ubuntu-Regular',
-          ),
-        )
-      ],
+      ),
     );
   }
 

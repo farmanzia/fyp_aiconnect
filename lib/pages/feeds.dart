@@ -40,6 +40,7 @@ late bool isAiExpert=false;
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
         automaticallyImplyLeading: false,
         title: Text(
           Constants.appName,

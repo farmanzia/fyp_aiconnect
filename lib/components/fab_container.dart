@@ -51,7 +51,6 @@ class FabContainer extends StatelessWidget {
   }
 
   chooseUpload(BuildContext context, StatusViewModel viewModel) {
-
     return showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
@@ -59,7 +58,7 @@ class FabContainer extends StatelessWidget {
       ),
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .55,
+          heightFactor: .25,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -78,21 +77,22 @@ class FabContainer extends StatelessWidget {
                 ),
               ),
               const Divider(),
-           if(viewModel.isAiExpert==false && int.parse(viewModel.score.toString())==0)ListTile(
-                leading: const Icon(
-                  CupertinoIcons.photo_fill_on_rectangle_fill,
-                  size: 25.0,
-                ),
-                title: const Text('Make a post'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(
-                    CupertinoPageRoute(
-                      builder: (_) => CreatePost(),
-                    ),
-                  );
-                },
-              ),
+           // if(viewModel.isAiExpert==false && int.parse(viewModel.score.toString())==0)
+           //   ListTile(
+           //      leading: const Icon(
+           //        CupertinoIcons.photo_fill_on_rectangle_fill,
+           //        size: 25.0,
+           //      ),
+           //      title: const Text('Make a post'),
+           //      onTap: () {
+           //        Navigator.pop(context);
+           //        Navigator.of(context).push(
+           //          CupertinoPageRoute(
+           //            builder: (_) => CreatePost(),
+           //          ),
+           //        );
+           //      },
+           //    ),
            if(viewModel.isAiExpert==true && int.parse(viewModel.score.toString())>=7)ListTile(
                 leading: const Icon(
                   CupertinoIcons.photo_fill_on_rectangle_fill,
@@ -108,32 +108,32 @@ class FabContainer extends StatelessWidget {
                   );
                 },
               ),
-              ListTile(
-                leading: const Icon(
-                  CupertinoIcons.camera_circle,
-                  size: 25.0,
-                ),
-                title: const Text('Add to story'),
-                onTap: () async {
-                  // Navigator.pop(context);
-                  await viewModel.pickImage(context: context);
-                },
-              ),
-              ListTile(
-                leading: Icon(
-                  Iconsax.video_square,
-                  size: 25.0,
-                ),
-                title: Text('Post a reel'),
-                onTap: () async {
-                  Navigator.pop(context);
-                  Navigator.of(context).push(
-                    CupertinoPageRoute(
-                      builder: (_) => CreateReel(),
-                    ),
-                  );
-                },
-              ),
+              // ListTile(
+              //   leading: const Icon(
+              //     CupertinoIcons.camera_circle,
+              //     size: 25.0,
+              //   ),
+              //   title: const Text('Add to story'),
+              //   onTap: () async {
+              //     // Navigator.pop(context);
+              //     await viewModel.pickImage(context: context);
+              //   },
+              // ),
+              // ListTile(
+              //   leading: Icon(
+              //     Iconsax.video_square,
+              //     size: 25.0,
+              //   ),
+              //   title: Text('Post a reel'),
+              //   onTap: () async {
+              //     Navigator.pop(context);
+              //     Navigator.of(context).push(
+              //       CupertinoPageRoute(
+              //         builder: (_) => CreateReel(),
+              //       ),
+              //     );
+              //   },
+              // ),
             ],
           ),
         );

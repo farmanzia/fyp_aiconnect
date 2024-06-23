@@ -74,6 +74,7 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
         title: Text(
           Constants.appName,
           style: const TextStyle(
@@ -90,6 +91,8 @@ class _SearchState extends State<Search> with AutomaticKeepAliveClientMixin {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            SizedBox(height: 16,),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: buildSearch(),

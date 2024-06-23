@@ -36,6 +36,8 @@ class _CommentsState extends State<Comments> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
+
         leading: GestureDetector(
           onTap: () {
             Navigator.pop(context);

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -75,7 +77,7 @@ class _ConversationState extends State<Conversation> {
             onTap: () {
               Navigator.pop(context);
             },
-            child: Icon(
+            child: const Icon(
               Icons.keyboard_backspace,
             ),
           ),
@@ -83,7 +85,7 @@ class _ConversationState extends State<Conversation> {
           titleSpacing: 0,
           title: buildUserName(),
         ),
-        body: Container(
+        body: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Column(
             children: [
@@ -91,12 +93,13 @@ class _ConversationState extends State<Conversation> {
                 child: StreamBuilder<QuerySnapshot>(
                   stream: messageListStream(widget.chatId),
                   builder: (context, snapshot) {
+                    log("==== widget.chatId ${widget.chatId}");
                     if (snapshot.hasData) {
                       List messages = snapshot.data!.docs;
                       viewModel.setReadCount(widget.chatId, user, messages.length);
                       return ListView.builder(
                         controller: scrollController,
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         itemCount: messages.length,
                         reverse: true,
                         itemBuilder: (BuildContext context, int index) {
@@ -122,7 +125,7 @@ class _ConversationState extends State<Conversation> {
                 child: BottomAppBar(
                   elevation: 10.0,
                   child: Container(
-                    constraints: BoxConstraints(maxHeight: 100.0),
+                    constraints: const BoxConstraints(maxHeight: 100.0),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
@@ -142,7 +145,7 @@ class _ConversationState extends State<Conversation> {
                               color: Theme.of(context).textTheme.headlineMedium!.color,
                             ),
                             decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(10.0),
+                              contentPadding: const EdgeInsets.all(10.0),
                               enabledBorder: InputBorder.none,
                               border: InputBorder.none,
                               hintText: "Type your message",
@@ -196,7 +199,7 @@ class _ConversationState extends State<Conversation> {
 
   buildUserName() {
     return StreamBuilder(
-      stream: usersRef.doc('${widget.userId}').snapshots(),
+      stream: usersRef.doc(widget.userId).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           DocumentSnapshot documentSnapshot =
@@ -208,7 +211,7 @@ class _ConversationState extends State<Conversation> {
             child: Row(
               children: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                  padding: const EdgeInsets.only(left: 10.0, right: 10.0),
                   child: Hero(
                     tag: user.email!,
                     child: user.photoUrl!.isEmpty
@@ -218,8 +221,8 @@ class _ConversationState extends State<Conversation> {
                                 Theme.of(context).colorScheme.secondary,
                             child: Center(
                               child: Text(
-                                '${user.username![0].toUpperCase()}',
-                                style: TextStyle(
+                                user.username![0].toUpperCase(),
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15.0,
                                   fontWeight: FontWeight.w900,
@@ -235,19 +238,19 @@ class _ConversationState extends State<Conversation> {
                           ),
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         '${user.username}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15.0,
                         ),
                       ),
-                      SizedBox(height: 5.0),
+                      const SizedBox(height: 5.0),
                       // StreamBuilder(
                       //   stream: chatRef.doc(widget.chatId).snapshots(),
                       //   builder: (context, snapshot) {
@@ -294,7 +297,7 @@ class _ConversationState extends State<Conversation> {
   showPhotoOptions(ConversationViewModel viewModel, var user) {
     showModalBottomSheet(
       context: context,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(10.0),
         ),
@@ -304,13 +307,13 @@ class _ConversationState extends State<Conversation> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             ListTile(
-              title: Text("Camera"),
+              title: const Text("Camera"),
               onTap: () {
                 sendMessage(viewModel, user, imageType: 0, isImage: true);
               },
             ),
             ListTile(
-              title: Text("Gallery"),
+              title: const Text("Gallery"),
               onTap: () {
                 sendMessage(viewModel, user, imageType: 1, isImage: true);
               },

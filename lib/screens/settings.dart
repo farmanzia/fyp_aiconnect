@@ -16,6 +16,7 @@ class _SettingState extends State<Setting> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.secondary.withOpacity(0.4),
         leading: InkWell(
           onTap: () {
             Navigator.pop(context);
