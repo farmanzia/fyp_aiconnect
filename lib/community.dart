@@ -27,6 +27,9 @@ class _GroupListScreenState extends State<GroupListScreen> {
           isAiExpert=true;
           score=value['score'];
         }
+        setState(() {
+          
+        });
       });
     }
   }
@@ -89,7 +92,7 @@ class _GroupListScreenState extends State<GroupListScreen> {
           );
         },
       ),
-      floatingActionButton:  isAiExpert==true && int.parse(score.toString())>=7? FloatingActionButton(
+      floatingActionButton:  (isAiExpert==true && int.parse(score.toString())>=7)? FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,

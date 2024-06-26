@@ -219,19 +219,17 @@ class PostsViewModel extends ChangeNotifier {
       loading = true;
       notifyListeners();
       await postService.uploadPost(
-          mediaUrl!, location ?? "", description ?? "");
+         (mediaUrl==null && video==null)==true?File("") : mediaUrl??video!, location ?? "", description ?? "");
       loading = false;
       resetPost();
       notifyListeners();
     } catch (e) {
       print(e);
       loading = false;
-      resetPost();
       showInSnackBar('Error Uploading!', context);
       notifyListeners();
     }
   }
-
   uploadReel(BuildContext context) async {
     try {
       loading = true;
@@ -278,6 +276,8 @@ class PostsViewModel extends ChangeNotifier {
     description = null;
     location = null;
     edit = false;
+    video=null;
+    description='';
     notifyListeners();
   }
 
@@ -285,6 +285,4 @@ class PostsViewModel extends ChangeNotifier {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value)));
   }
-
-
 }

@@ -22,9 +22,14 @@ class PostService extends Service {
 
 //uploads post to the post collection
   uploadPost(File image, String location, String description) async {
-    String link = await uploadMedia(posts, image);
-    DocumentSnapshot doc =
-        await usersRef.doc(firebaseAuth.currentUser!.uid).get();
+    String link ='';
+
+if(image.path.isNotEmpty){
+  link=  await uploadMedia(posts, image);
+}
+
+
+    DocumentSnapshot doc = await usersRef.doc(firebaseAuth.currentUser!.uid).get();
     user = UserModel.fromJson(
       doc.data() as Map<String, dynamic>,
     );

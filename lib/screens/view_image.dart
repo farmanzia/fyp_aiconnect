@@ -32,9 +32,7 @@ class _ViewImageState extends State<ViewImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
-        child: buildImage(context),
-      ),
+      body: buildImage(context),
       bottomNavigationBar: BottomAppBar(
         elevation: 0.0,
         color: Colors.transparent,
@@ -78,7 +76,7 @@ class _ViewImageState extends State<ViewImage> {
   buildImage(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: ClipRRect(
+      child: widget.post!.mediaUrl!.isNotEmpty? ClipRRect(
         borderRadius: BorderRadius.circular(5.0),
         child: CachedNetworkImage(
           imageUrl: widget.post!.mediaUrl!,
@@ -92,7 +90,7 @@ class _ViewImageState extends State<ViewImage> {
           fit: BoxFit.cover,
           width: MediaQuery.of(context).size.width,
         ),
-      ),
+      ):Text(widget.post!.description.toString()),
     );
   }
 
@@ -166,7 +164,7 @@ class _ViewImageState extends State<ViewImage> {
             onTap: onLikeButtonTapped,
             size: 25.0,
             circleColor:
-                CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
+                const CircleColor(start: Color(0xffFFC0CB), end: Color(0xffff0000)),
             bubblesColor: BubblesColor(
               dotPrimaryColor: Color(0xffFFA500),
               dotSecondaryColor: Color(0xffd8392b),

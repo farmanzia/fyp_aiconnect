@@ -43,8 +43,8 @@ class _TabScreenState extends State<TabScreen> {
     {
       'title': 'Community',
       'icon': Iconsax.people,
-      // 'page': WoobleReels(),
       'page': GroupListScreen(),
+      // 'page': WoobleReels(),
       'index': 3,
     },
     {

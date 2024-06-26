@@ -49,7 +49,7 @@ class _QuizScreenState extends State<QuizScreen> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                       title: const Text('Quiz Complete'),
-                      content: Text('Your score: $score'),
+                      content: const Text("Oops! You didn't pass the questionnaire.\nDon't worry! Learning takes time and try again later"),
                       actions: <Widget>[
                         TextButton(
                           onPressed: () {

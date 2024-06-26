@@ -65,20 +65,20 @@ late bool isAiExpert=false;
               );
             },
           ),
-          IconButton(
-            icon: const Icon(
-              Iconsax.message,
-              size: 25.0,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (_) => Chats(),
-                ),
-              );
-            },
-          ),
+          // IconButton(
+          //   icon: const Icon(
+          //     Iconsax.message,
+          //     size: 25.0,
+          //   ),
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       CupertinoPageRoute(
+          //         builder: (_) => Chats(),
+          //       ),
+          //     );
+          //   },
+          // ),
           const SizedBox(width: 5.0),
         ],
       ),

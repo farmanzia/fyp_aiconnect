@@ -67,6 +67,7 @@ dependencies:
   shimmer: ^3.0.0
   video_player: ^2.7.2
   cached_network_image: ^3.3.0
+  get:
 
 
 

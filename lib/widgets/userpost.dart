@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fyp_social_app/components/custom_video_player.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:like_button/like_button.dart';
 import 'package:fyp_social_app/components/custom_card.dart';
@@ -50,39 +51,45 @@ class UserPost extends StatelessWidget {
         closedBuilder: (BuildContext context, VoidCallback openContainer) {
           return Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Stack(
+            child: Column(
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
+                   if(post!.mediaUrl!.isNotEmpty)  Padding(
                       padding: const EdgeInsets.only(top: 55.0, bottom: 10),
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(0.0),
                           topRight: Radius.circular(0.0),
                         ),
-                        child: CustomImage(
-                          imageUrl: post?.mediaUrl ?? '',
+                        child:
+                        post!.mediaUrl!.toString().contains(".mp4")?
+                        MiniVideoPlayer(
+                          autoPlay: true,
+                          videoUrl:  post?.mediaUrl!??'',
+                          fromNetwork: true,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.width - 30,
+                        ):
+
+                        CustomImage(
+                          imageUrl: post?.mediaUrl,
                           height: 350.0,
                           fit: BoxFit.cover,
                           width: double.infinity,
                         ),
                       ),
                     ),
-                    Visibility(
-                      visible: post!.description != null &&
-                          post!.description.toString().isNotEmpty,
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 0.0, top: 3.0),
-                        child: Text(
-                          '${post?.description ?? "".trim()}',
-                          style: const TextStyle(
-                            fontSize: 15.0,
-                          ),
-                          maxLines: 2,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 0.0, top: 3.0),
+                      child: Text(
+                        post!.description!,
+                        style: const TextStyle(
+                          fontSize: 15.0,
                         ),
+                        maxLines: 2,
                       ),
                     ),
                     const SizedBox(height: 5.0),
@@ -168,7 +175,6 @@ class UserPost extends StatelessWidget {
       ),
     );
   }
-
   buildLikeButton() {
     return StreamBuilder(
       stream: likesRef

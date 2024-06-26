@@ -162,49 +162,47 @@ class _ProfileState extends State<Profile> {
                   ),
                   const SizedBox(height: 8,),
 
-                  FittedBox(
-                    child: Row(
-                      mainAxisAlignment:MainAxisAlignment.center,
-                      children: [
-                        widget.profileId == currentUserId()
-                            ? Column(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  CupertinoPageRoute(
-                                    builder: (_) => Setting(),
-                                  ),
-                                );
-                              },
-                              child: Icon(
-                                Ionicons.settings_outline,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .secondary,
-                              ),
+                  Row(
+                    mainAxisAlignment:MainAxisAlignment.center,
+                    children: [
+                      widget.profileId == currentUserId()
+                          ? Column(
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (_) => Setting(),
+                                ),
+                              );
+                            },
+                            child: Icon(
+                              Ionicons.settings_outline,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .secondary,
                             ),
+                          ),
 
-                            isAiExpert==true && int.parse(score.toString())>=7?  const Row(
-                              children: [
-                                CircleAvatar(radius: 8,backgroundColor: Colors.green, child: Icon(Icons.done_outline,size: 8,),),
-                                Text(" expert ",style: TextStyle(fontSize: 10),)
+                          isAiExpert==true && int.parse(score.toString())>=7?  const Row(
+                            children: [
+                              CircleAvatar(radius: 8,backgroundColor: Colors.green, child: Icon(Icons.done_outline,size: 8,),),
+                              Text(" expert ",style: TextStyle(fontSize: 10),)
 
-                              ],
-                            ):const Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 8, child: Icon(Icons.close,size: 8,),),
-                                Text(" expert ",style: TextStyle(fontSize: 10),)
-                              ],
-                            )
+                            ],
+                          ):const Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 8, child: Icon(Icons.close,size: 8,),),
+                              Text(" expert ",style: TextStyle(fontSize: 10),)
+                            ],
+                          )
 
-                          ],
-                        )
-                            : const SizedBox.shrink()
-                        // : buildLikeButton()
-                      ],
-                    ),
+                        ],
+                      )
+                          : const SizedBox.shrink()
+                      // : buildLikeButton()
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0, left: 20.0),
